@@ -53,7 +53,13 @@ fi
 
 FILES=$(find $SOURCE_DIR -name "*.log" -mtime +$DAYS)
 
-echo "Files are: $FILES"
+if [ -n "$FILES" ]
+then
+    echo "Files are: $FILES"
+else
+    echo "No files older than $DAYS days found in $SOURCE_DIR"
+    exit 0
+fi
 
 CHECK_ROOT(){
     if [ $USERID -ne 0 ]
