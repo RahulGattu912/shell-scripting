@@ -39,6 +39,22 @@ then
     USAGE
 fi
 
+if [ ! -d $SOURCE_DIR ]
+then
+    echo -e "$R ERROR: Source directory $SOURCE_DIR does not exist $N"
+    exit 1
+fi
+
+if [ ! -d $DEST_DIR ]
+then
+    echo -e "$R ERROR: Destination directory $DEST_DIR does not exist $N"
+    exit 1
+fi
+
+FILES=$(find $SOURCE_DIR -name "*.log" +mtime $DAYS)
+
+echo "Files are: $FILES"
+
 CHECK_ROOT(){
     if [ $USERID -ne 0 ]
     then
