@@ -1,0 +1,45 @@
+#!/bin/bash
+
+R="\e[31m"
+G="\e[32m"
+Y="\e[33m"
+N="\e[0m"
+
+SOURCE_DIR=$1
+DEST_DIR=$2
+# DAYS=$3 || DAYS=14 #default value
+DAYS=${3:-14} #if DAYS is not provided, default to 14
+
+LOGS_FOLDER="/var/log/shellscript-logs"
+LOG_FILE=$(echo $0 | cut -d "." -f1 ) #log file name will be backup
+TIMESTAMP=$(date +%Y-%m-%d-%H-%M-%S) # timestamp format
+LOG_FILE_NAME="$LOGS_FOLDER/$LOG_FILE-$TIMESTAMP.log"
+
+VALIDATE(){
+    if [ $1 -ne 0 ]
+    then
+        echo -e "$2 ... $R FAILURE $N"
+        exit 1
+    else
+        echo -e "$2 ... $G SUCCESS $N"
+    fi
+}
+
+
+USAGE(){
+    echo -e "$R USAGE: $N sh backup.sh <SOURCE_DIR> <DEST_DIR> [DAYS](optional, default=14)"
+}
+
+
+if [ $# -lt 2]
+then
+    USAGE
+fi
+
+CHECK_ROOT(){
+    if [ $USERID -ne 0 ]
+    then
+        echo "ERROR:: You must have sudo access to execute this script"
+        exit 1 #other than 0
+    fi
+}
