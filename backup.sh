@@ -58,6 +58,22 @@ then
     echo "Files are: $FILES"
     ZIP_FILE="$DEST_DIR/app-logs-$TIMESTAMP.zip" # zip file name with timestamp
     find $SOURCE_DIR -name "*.log" -mtime +$DAYS | zip -@ $ZIP_FILE
+    if [ -f "$ZIP_FILE" ]
+    then
+        echo -e "$G Zip file $ZIP_FILE created successfully $N"
+        echo "Deleting original log files older than $DAYS days from $SOURCE_DIR"
+        while read -r file
+        do
+            echo "Deleting file: $file" &>> $LOG_FILE_NAME
+            rm -rf "$file"
+            echo "Deleted file: $file"
+        done <<< "$FILES"
+        echo "Backup completed. Backup file located at: $ZIP_FILE"
+        exit 0
+    else
+        echo -e "$R ERROR: Failed to create zip file $ZIP_FILE $N"
+        exit 1
+    fi
 else
     echo "No files older than $DAYS days found in $SOURCE_DIR"
     exit 0
