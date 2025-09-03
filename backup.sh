@@ -12,6 +12,7 @@ DAYS=${3:-14} #if DAYS is not provided, default to 14
 
 LOGS_FOLDER="/home/ec2-user/shellscript-logs"
 LOG_FILE=$(echo $0 | cut -d "." -f1 ) #log file name will be backup
+#LOG_FILE=$(echo $0 | awk -F "/" '{print $NF}' | cut -d "." -f1 ) #log file name will be backup , this is for crontab. the above line takes complete path as file name
 TIMESTAMP=$(date +%Y-%m-%d-%H-%M-%S) # timestamp format
 LOG_FILE_NAME="$LOGS_FOLDER/$LOG_FILE-$TIMESTAMP.log"
 
