@@ -10,7 +10,7 @@ DEST_DIR=$2
 # DAYS=$3 || DAYS=14 #default value
 DAYS=${3:-14} #if DAYS is not provided, default to 14
 
-LOGS_FOLDER="/var/log/shellscript-logs"
+LOGS_FOLDER="/home/ec2-user/shellscript-logs"
 LOG_FILE=$(echo $0 | cut -d "." -f1 ) #log file name will be backup
 TIMESTAMP=$(date +%Y-%m-%d-%H-%M-%S) # timestamp format
 LOG_FILE_NAME="$LOGS_FOLDER/$LOG_FILE-$TIMESTAMP.log"
@@ -28,7 +28,10 @@ VALIDATE(){
 
 USAGE(){
     echo -e "$R USAGE: $N sh backup.sh <SOURCE_DIR> <DEST_DIR> [DAYS](optional, default=14)"
+    exit 1
 }
+
+mkdir -p /home/ec2-user/shellscript-logs/
 
 
 if [ $# -lt 2 ]
