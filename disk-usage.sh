@@ -10,6 +10,9 @@ do
     echo "Partition: $PARTITION, Usage: $USAGE"
     if [ $USAGE -gt $DISK_THRESHOLD ] 
     then
+        MSG+="High disk usage on partition $PARTITION: $USAGE% (threshold: $DISK_THRESHOLD%)\n"
         echo "Warning: Disk usage for partition $PARTITION is above threshold ($USAGE% > $DISK_THRESHOLD%)"
     fi
 done <<< $DISK_USAGE
+
+echo -e "$MSG"
