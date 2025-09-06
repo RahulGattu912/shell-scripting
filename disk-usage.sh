@@ -8,4 +8,4 @@ do
     USAGE=$(echo $line | awk -F " " '{print $6}' | cut -d'%' -f1) # get usage percentage without %
     PARTITION=$(echo $line | awk -F " " '{print $N}')
     echo "Partition: $PARTITION, Usage: $USAGE"
-done <<< "$DISK_USAGE"
+done <<< $DISK_USAGE
