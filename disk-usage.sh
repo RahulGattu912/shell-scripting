@@ -7,12 +7,11 @@ while read -r line
 do
     USAGE=$(echo $line | awk -F " " '{print $6}' | cut -d'%' -f1) # get usage percentage without %
     PARTITION=$(echo $line | awk -F " " '{print $N}')
-    echo "Partition: $PARTITION, Usage: $USAGE"
+    # echo "Partition: $PARTITION, Usage: $USAGE"
     if [ $USAGE -gt $DISK_THRESHOLD ] 
     then
-        MSG+="High disk usage on partition $PARTITION: $USAGE% (threshold: $DISK_THRESHOLD%)\n"
-        echo "Warning: Disk usage for partition $PARTITION is above threshold ($USAGE% > $DISK_THRESHOLD%)"
+        MSG+="High disk usage on partition $PARTITION: $USAGE% (threshold: $DISK_THRESHOLD%)\n" # appends message
     fi
 done <<< $DISK_USAGE
 
-echo -e "$MSG"
+echo -e "$MSG" | mutt -s "High Disk Usage" rahulgattu912@gmail.com
